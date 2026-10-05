@@ -1,0 +1,22 @@
+# Datasets
+*.csv
+*.xlsx
+*.xls
+
+# Mac OS and Environment junk
+.DS_Store
+
+
+venv/
+.env
+.ipynb_checkpoints/
+__pycache__/
+
+
+# Windows OS junk
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE files (if either of you use VS Code)
+.vscode/
