@@ -11,6 +11,47 @@ decisions. The primary classification target is whether a reported delay is
 greater than 15 minutes (`Prolonged_Disruption`). The secondary regression
 target is the reported `Min Delay` in minutes.
 
+## Notebook Structure
+
+`TTC_Delay_EDA.ipynb` runs top to bottom and covers the Milestone 3
+requirements in order:
+
+1. **Dataset overview** - size, column names, data types.
+2. **Feature categorization** - temporal, categorical, numerical, identifier,
+   and target variables.
+3. **Train/test split** - stratified 80/20 split (`random_state=313`) taken
+   before the detailed analysis, so the test set stays unexamined.
+4. **Missing data and quality assessment** - missingness audit, investigation
+   of the 36.5% missing `Bound` values, duplicate and range checks, and the
+   row-level cleaning applied to both subsets.
+5. **Descriptive statistics** - summary statistics for numerical features and
+   frequency counts for categorical ones.
+6. **Outliers** - IQR analysis, boxplot and distribution charts, and the
+   decision to retain genuine extreme delays.
+7. **Target variable exploration** - class balance, threshold sensitivity,
+   regression target shape, correlation analysis, and prolonged-disruption
+   rates by incident code, line, and hour.
+8. **Preprocessing summary** - per-feature keep/exclude decisions and the
+   steps to be fitted on the training set during modeling.
+
+### Key findings
+
+- About 64% of logged incidents have a delay of exactly 0 minutes.
+- The classification target is heavily imbalanced: roughly 3% of records are
+  prolonged disruptions at the 15-minute threshold.
+- `Min Gap` correlates with `Min Delay` at 0.96 and, by its definition, is
+  only known after the incident resolves, so it is **excluded as leakage**.
+- `Code` is the strongest predictor available at incident onset on every
+  measure (mutual information and Cramér's V), separating incident types from
+  a 0% to a 19% prolonged rate.
+- `Bound` is the second most informative feature because its *missingness*
+  is tied to incident type, so missing values are kept as `Unknown`.
+- Calendar features (`Day`, `Is_Weekend`, `Month`, `Season`) show no
+  association with the target above chance.
+- Restricting the model to incidents with a non-zero delay would raise the
+  positive share from about 3% to about 9%. This scope choice is left open
+  for the group.
+
 ## Dataset Scope
 
 This project uses **only the 2023 and 2024 TTC subway delay datasets**. The
