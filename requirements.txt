@@ -3,4 +3,8 @@ numpy
 matplotlib
 seaborn
 jupyter
-scikit-learn
+scikit-learn>=1.4
+scipy
+openpyxl
+xgboost
+imbalanced-learn

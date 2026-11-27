@@ -1,10 +1,11 @@
-# TTC Subway Delay Exploratory Data Analysis (EDA)
+# TTC Subway Delay Analysis and Modeling
 
 ## Project Overview
 
-This repository contains the Exploratory Data Analysis (EDA) for Milestone 3
-of our Data Science course. The project analyzes TTC subway delay records to
-prepare for predictive modeling.
+This repository contains the Exploratory Data Analysis (Milestone 3) and the
+modeling work (Milestone 4) for our Data Science course. The project analyzes
+TTC subway delay records and builds a model that estimates, at the onset of an
+incident, the probability that it becomes a prolonged disruption.
 
 Our business objective is to support emergency shuttle-bus deployment
 decisions. The primary classification target is whether a reported delay is
@@ -52,6 +53,41 @@ requirements in order:
   positive share from about 3% to about 9%. This scope choice is left open
   for the group.
 
+## Milestone 4: modeling notebook
+
+`TTC_Delay_Modeling.ipynb` runs top to bottom and covers the Milestone 4
+requirements:
+
+1. Phase 1: Experimental design and data preparation: objective, target,
+   feature set, metrics, redundancy checks, and stratified 5-fold validation.
+2. Phase 2: Preprocessing pipeline: encoders and scaler fitted inside
+   each training fold to prevent leakage.
+3. Phase 3: Baseline models: Logistic Regression, Random Forest, and
+   XGBoost with default settings.
+4. Phase 4: Class imbalance and augmentation: class weights, random
+   over/undersampling, SMOTE, and SMOTENC compared on identical folds, with
+   resampling applied to training folds only.
+5. Phase 5: Hyperparameter tuning and final model: randomized search for
+   the three models, probability calibration, and threshold selection.
+6. Phase 6: Evaluation: single use of the test set, baselines, bootstrap
+   intervals, learning curve, robustness checks, subgroup and error analysis.
+7. Bias analysis, followed by the Phase 7 reflection.
+
+### Key results
+
+- Resampling did not improve ranking quality (PR-AUC) and made the predicted
+  probabilities about ten times too high, so the final model uses no
+  augmentation.
+- After tuning, the three models are tied at a cross-validated PR-AUC of about
+  0.28. The final model is a Logistic Regression with isotonic calibration.
+- Test set: PR-AUC 0.245 (no-skill value 0.032), ROC-AUC 0.865, recall 0.50
+  and precision 0.21 at the chosen threshold.
+- The incident code carries almost all of the signal. A code-only baseline
+  reaches a test PR-AUC of 0.214.
+
+The full notebook takes roughly 10 minutes to run; most of that is the
+hyperparameter search in Phase 5.
+
 ## Dataset Scope
 
 This project uses **only the 2023 and 2024 TTC subway delay datasets**. The
@@ -69,7 +105,7 @@ ttc-subway-delay-data-2024.xlsx
 ttc-subway-delay-codes.xlsx
 ```
 
-Place all three files in the same directory as `TTC_Delay_EDA.ipynb`.
+Place all three files in the same directory as the notebooks.
 
 ## Data Source
 
@@ -91,7 +127,7 @@ files to the exact filenames listed above so the notebook can load them.
    ```
 
 3. Download the three required `.xlsx` files listed above.
-4. Place the files in the project folder beside `TTC_Delay_EDA.ipynb`.
+4. Place the files in the project folder beside the notebooks.
 5. Open and run the notebook cells from top to bottom.
 
 ## Data Files and GitHub
