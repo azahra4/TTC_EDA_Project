@@ -88,6 +88,25 @@ requirements:
 The full notebook takes roughly 10 minutes to run; most of that is the
 hyperparameter search in Phase 5.
 
+## Milestone 5: report figures
+
+`m5_figures.py` rebuilds the final Milestone 4 model (tuned Logistic Regression
+with isotonic calibration) and writes every figure and number used in the
+Milestone 5 report and slides. It adds two analyses that are not in the
+modeling notebook: SHAP values for the logistic model and calibration
+residuals by line, time of day and year.
+
+Run it from the folder that holds the three TTC Excel files:
+
+```bash
+python m5_figures.py m5_out
+```
+
+It takes about 30 seconds and writes PNG figures to `m5_out/report/` and
+`m5_out/slides/`, plus `m5_out/numbers.json` with every number quoted in the
+report. The figures use the Inter font when it is installed and fall back to
+the default font otherwise.
+
 ## Dataset Scope
 
 This project uses **only the 2023 and 2024 TTC subway delay datasets**. The

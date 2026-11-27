@@ -20,3 +20,6 @@ $RECYCLE.BIN/
 
 # IDE files (if either of you use VS Code)
 .vscode/
+
+# Milestone 5 figure output
+m5_out/
